@@ -9,6 +9,7 @@ func getCharacterIndex(slice []rune, target rune) int {
 			return iter
 		}
 	}
+	// Not found
 	return -1
 }
 
