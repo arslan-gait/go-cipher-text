@@ -1,5 +1,7 @@
 # go-cipher-text
 
+## PS: Делал для двух массивов, как и указано в ТЗ
+
 ## How to build
 - `go build encrypt.go util.go`
 - `go build decrypt.go util.go`
