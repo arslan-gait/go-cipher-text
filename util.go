@@ -4,38 +4,39 @@ var lowSlice = []rune{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'
 var capitalSlice = []rune{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'}
 
 func getCharacterIndex(slice []rune, target rune) int {
-	for index, char := range slice {
-		if target == char {
-			return index
+	for iter, item := range slice {
+		if target == item {
+			return iter
 		}
 	}
 	return -1
 }
 
-func encryptDecryptText(text *string, key int, slice1 []rune, slice2 []rune, operation rune) string {
-	if operation == 'd' {
+func shiftRune(curIdx int, iter int, result []rune, key int, alphabet []rune) {
+
+	newIdx := (curIdx + key) % len(alphabet)
+
+	if newIdx < 0 {
+		newIdx += len(alphabet)
+	}
+
+	result[iter] = alphabet[newIdx]
+}
+
+func encryptDecryptText(text *string, key int, firstAlphabet []rune, secondAlphabet []rune, operation string) string {
+
+	if operation == "decrypt" {
 		key *= -1
 	}
 
-	runes := []rune(*text)
+	result := []rune(*text)
 
-	for index, char := range runes {
-		lowSliceSize, capitalSliceSize := len(slice1), len(slice2)
-
-		if curIdx := getCharacterIndex(slice1, char); curIdx != -1 {
-			newIdx := (curIdx + key) % lowSliceSize
-			if newIdx < 0 {
-				newIdx += lowSliceSize
-			}
-			runes[index] = slice1[newIdx]
-
-		} else if curIdx := getCharacterIndex(slice2, char); curIdx != -1 {
-			newIdx := (curIdx + key) % capitalSliceSize
-			if newIdx < 0 {
-				newIdx += capitalSliceSize
-			}
-			runes[index] = slice2[newIdx]
+	for iter, item := range result {
+		if curIdx := getCharacterIndex(firstAlphabet, item); curIdx != -1 {
+			shiftRune(curIdx, iter, result, key, firstAlphabet)
+		} else if curIdx := getCharacterIndex(secondAlphabet, item); curIdx != -1 {
+			shiftRune(curIdx, iter, result, key, secondAlphabet)
 		}
 	}
-	return string(runes)
+	return string(result)
 }

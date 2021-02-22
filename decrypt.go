@@ -12,7 +12,7 @@ func main() {
 
 	flag.Parse()
 
-	decrypted := encryptDecryptText(textPtr, *keyPtr, lowSlice, capitalSlice, 'd')
+	decrypted := encryptDecryptText(textPtr, *keyPtr, lowSlice, capitalSlice, "decrypt")
 
 	fmt.Println(decrypted)
 }
