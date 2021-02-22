@@ -1,8 +1,8 @@
 # go-cipher-text
 
 ## How to build
-- go build encrypt.go util.go
-- go build decrypt.go util.go
+- `go build encrypt.go util.go`
+- `go build decrypt.go util.go`
 
 ## How to run
 `k` is key, `t` is text
